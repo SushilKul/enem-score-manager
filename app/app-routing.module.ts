@@ -4,7 +4,6 @@ import { errorRoute } from "./layouts/error/error.route"
 import { navbarRoute } from "./layouts/navbar/navbar.route"
 import { DEBUG_INFO_ENABLED } from "app/app.constants"
 import { Authority } from "app/config/authority.constants"
-
 import { UserRouteAccessService } from "app/core/auth/user-route-access.service"
 import { DashboardComponent } from "./dashboard/dashboard.component"
 
@@ -16,7 +15,7 @@ const routes: Routes = [
     },
     canActivate: [UserRouteAccessService],
     loadChildren: () => import("./admin/admin-routing.module").then((m) => m.AdminRoutingModule),
-  },``
+  },
   {
     path: "account",
     loadChildren: () => import("./account/account.module").then((m) => m.AccountModule),
@@ -27,17 +26,20 @@ const routes: Routes = [
   },
   {
     path: "dashboard",
-    component: DashboardComponent,`./dashboard/dashboard.component`
+    component: DashboardComponent,
   },
   {
-    data: {
+        data: {
       authorities: [Authority.ADMIN, Authority.USER],
     },
     canActivate: [UserRouteAccessService],
-  },
+},
   {
     path: "",
-    loadChildren: () => import(`./entities/entity-routing.module`).then((m) => m.EntityRoutingModule),
+    loadChildren: () => import("./entities/entity-routing.module").then((m) => m.EntityRoutingModule).catch(() => {
+      console.error("Module not found: './entities/entity-routing.module'");
+      return null;
+    }),
   },
   navbarRoute,
   ...errorRoute,
