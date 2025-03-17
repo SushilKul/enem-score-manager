@@ -1,7 +1,7 @@
 "use client"
 
-import  from "app-routing.module"
+import { SomeComponent } from "./app-routing.module"
 
-export default function SyntheticV0PageForDeployment() {
-  return < />
+export default function SyntheticVOPageForDeployment() {
+  return <SomeComponent />
 }
